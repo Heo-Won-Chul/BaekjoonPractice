@@ -17,27 +17,20 @@ public class Issue10869 {
 			return;
 		}
 
+		StringBuilder sb = new StringBuilder();
 		List<Integer> numbers = Arrays.stream(input.split(" ")).map(Integer::parseInt).collect(Collectors.toList());
 
-		System.out.println(
-				numbers.stream().reduce((a, b) -> a + b).get()
-		);
+		sb.append(numbers.stream().reduce((a, b) -> a + b).get())
+			.append("\n")
+			.append(numbers.stream().reduce((a, b) -> a - b).get())
+			.append("\n")
+			.append(numbers.stream().reduce((a, b) -> a * b).get())
+			.append("\n")
+			.append(numbers.stream().reduce((a, b) -> a / b).get())
+			.append("\n")
+			.append(numbers.stream().reduce((a, b) -> a % b).get());
 
-		System.out.println(
-				numbers.stream().reduce((a, b) -> a - b).get()
-		);
-
-		System.out.println(
-				numbers.stream().reduce((a, b) -> a * b).get()
-		);
-
-		System.out.println(
-				numbers.stream().reduce((a, b) -> a / b).get()
-		);
-
-		System.out.println(
-				numbers.stream().reduce((a, b) -> a % b).get()
-		);
+		System.out.print(sb.toString());
 	}
 
 	private static boolean isEmpty(String value) {
