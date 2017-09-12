@@ -24,6 +24,6 @@ public class Issue10998 {
 	}
 
 	private static boolean isEmpty(String value) {
-			return value == null || "".equals(value);
-		}
+		return value == null || "".equals(value);
+	}
 }
