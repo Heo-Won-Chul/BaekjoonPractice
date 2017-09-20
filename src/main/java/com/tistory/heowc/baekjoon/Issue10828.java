@@ -1,92 +1,77 @@
 package com.tistory.heowc.baekjoon;
 
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Issue10828 {
 
 	public static void main(String [] args) {
+		StringBuilder sb = new StringBuilder();
 		Scanner scanner = new Scanner(System.in);
 		CustomStack customStack = new CustomStack(10001);
-		int executeCount = scanner.nextInt();
 
+		int executeCount = scanner.nextInt();
 		for (int i = 0; i <= executeCount; i++) {
-			String contentOfLine = scanner.nextLine();
-			execute(contentOfLine, customStack);
+			execute(sb, customStack, scanner.nextLine());
 		}
+		System.out.print(sb.toString());
 	}
 
-	private static void execute(String contentOfLine, CustomStack customStack) {
-		if (isEmpty(contentOfLine)) {
-			return;
-		}
-
+	private static void execute(StringBuilder sb, CustomStack customStack, String contentOfLine) {
 		if (contentOfLine.startsWith(Execute.PUSH.name().toLowerCase())) {
-			customStack.push(Integer.parseInt(contentOfLine.split(" ")[1]));
+			StringTokenizer st = new StringTokenizer(contentOfLine);
+			st.nextToken();
+			customStack.push(Integer.parseInt(st.nextToken()));
 		}
 
 		if (Execute.POP.name().equalsIgnoreCase(contentOfLine)) {
-			System.out.println(customStack.pop());
+			sb.append(customStack.pop()).append("\n");
 		}
 
 		if (Execute.EMPTY.name().equalsIgnoreCase(contentOfLine)) {
-			System.out.println(customStack.empty());
+			sb.append(customStack.empty()).append("\n");
 		}
 
 		if (Execute.SIZE.name().equalsIgnoreCase(contentOfLine)) {
-			System.out.println(customStack.size());
+			sb.append(customStack.size()).append("\n");
 		}
 
 		if (Execute.TOP.name().equalsIgnoreCase(contentOfLine)) {
-			System.out.println(customStack.top());
+			sb.append(customStack.top()).append("\n");
 		}
-	}
-
-	private static boolean isEmpty(String value) {
-		return value == null || "".equals(value);
 	}
 
 	private enum Execute {
 		PUSH, POP, SIZE, EMPTY, TOP
 	}
 
-	static class CustomStack {
+	private static class CustomStack {
 		private int top;
-		private int maxSize;
 		private int[] stack;
 
-		public CustomStack(int maxSize){
+		CustomStack(int maxSize) {
 			this.top = -1;
-			this.maxSize = maxSize;
 			this.stack = new int[maxSize];
 		}
 
-		public int empty(){
-			if(top == -1){
-				return 1;
-			}
-			return 0;
+		int empty() {
+			return top == -1 ? 1 : 0;
 		}
 
-		public void push(int data){
+		void push(int data) {
 			stack[++top] = data;
 		}
 
-		public int top(){
-			if(top == -1){
-				return -1;
-			}
-			return stack[top];
+		int top() {
+			return top == -1 ? -1 : stack[top];
 		}
 
-		public int pop(){
-			if(top == -1){
-				return -1;
-			}
-			return stack[top--];
+		int pop() {
+			return top == -1 ? -1 : stack[top--];
 		}
 
-		public int size(){
-			return top+1;
+		int size() {
+			return top + 1;
 		}
 	}
 }
